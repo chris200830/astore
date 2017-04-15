@@ -53,7 +53,7 @@ public class ProductController {
 		productForm.setThumbnails(thumbnails);
 		productForm.setCategory(categoryService.findOne(Integer.parseInt(request.getParameter("categoryId"))));
 		productService.save(productForm);
-		return "admin/add-product";
+		return "admin/view-products";
 	}
 
 	@GetMapping("/view-products")

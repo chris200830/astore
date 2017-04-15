@@ -2,6 +2,7 @@ package com.rx.powerstore.validator;
 
 import com.rx.powerstore.entity.User;
 import com.rx.powerstore.service.UserService;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,7 +22,6 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		User user = (User) o;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
 
 		if (user.getUsername().length() < 3 || user.getUsername().length() > 16)
 			errors.rejectValue("username", "Size.userForm.username");
@@ -29,13 +29,25 @@ public class UserValidator implements Validator {
 		if (userService.findByUsername(user.getUsername()) != null)
 			errors.rejectValue("username", "Duplicate.userForm.username");
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-
-		if (user.getPassword().length() < 3 || user.getPassword().length() > 32)
+		if (user.getPassword().length() < 6 || user.getPassword().length() > 32)
 			errors.rejectValue("password", "Size.userForm.password");
 
 		if (!user.getPasswordConfirm().equals(user.getPassword()))
 			errors.rejectValue("password", "Different.userForm.password");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty");
+
+		if (userService.findByEmailAddress(user.getEmailAddress()) != null)
+			errors.rejectValue("emailAddress", "Duplicate.userForm.emailAddress");
+		
+		if(!EmailValidator.getInstance().isValid(user.getEmailAddress()))
+			errors.rejectValue("emailAddress", "Invalid.userForm.emailAddress");
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephoneNumber", "NotEmpty");
 	}
 
 }
