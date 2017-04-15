@@ -4,33 +4,60 @@
 <head>
 <meta charset="ISO-8859-1" />
 <title>Add Product</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
 </head>
 <body>
 	<h1>Add a product:</h1>
-	<form action="/add-product" method="POST" enctype="multipart/form-data">
-		<p>Product Name</p>
-		<input type="text" name="name" />
-
-		<p>Product Details</p>
-		<input type="text" name="details" />
-
-		<p>Product Price</p>
-		<input type="text" name="price" />
-
-		<p>Count</p>
-		<input type="text" name="count" />
-
+	<form th:action="@{/admin/add-product}" method="POST"
+		enctype="multipart/form-data" th:object="${productForm}"
+		align="center">
+		<div class="form-group">
+			<label for="name">Product Name</label>
+			<p>
+				<input type="text" name="name" />
+			</p>
+			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+		</div>
+		<div class="form-group">
+			<label for="details">Product Details</label>
+			<p>
+				<input type="text" name="details" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="price">Price</label>
+			<p>
+				<input type="text" name="price" />
+			</p>
+			<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+		</div>
+		<div class="form-group">
+			<label>Total Count</label>
+			<p>
+				<input type="text" name="totalCount" />
+			</p>
+			<p th:if="${#fields.hasErrors('totalCount')}"
+				th:errors="*{totalCount}"></p>
+		</div>
 		<p>Category</p>
 		<select name="categoryId">
-			<option th:each="category : ${categories}" value="${category.id}" th:text="${category.name}"></option>
-		</select> 
-		<p>Thumbnails</p>
-		<input type="file" name="thumbnailFile"/>
-		<input type="hidden"
+			<option th:each="category : ${categories}" value="${category.id}"
+				th:text="${category.name}"></option>
+		</select>
+		<div class="form-group">
+		<label for="thumbnails">Thumbnails</label>
+		<p align="center"><input type="file" name="thumbnailFile" /> </p>
+		</div><input type="hidden"
 			th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		<p>
 			<button type="submit">Add Product</button>
 		</p>
 	</form>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

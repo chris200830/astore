@@ -22,7 +22,15 @@ public class UserValidator implements Validator {
 	@Override
 	public void validate(Object o, Errors errors) {
 		User user = (User) o;
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
 
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty");
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephoneNumber", "NotEmpty");
+		
 		if (user.getUsername().length() < 3 || user.getUsername().length() > 16)
 			errors.rejectValue("username", "Size.userForm.username");
 
@@ -35,19 +43,11 @@ public class UserValidator implements Validator {
 		if (!user.getPasswordConfirm().equals(user.getPassword()))
 			errors.rejectValue("password", "Different.userForm.password");
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "NotEmpty");
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "NotEmpty");
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "NotEmpty");
-
 		if (userService.findByEmailAddress(user.getEmailAddress()) != null)
 			errors.rejectValue("emailAddress", "Duplicate.userForm.emailAddress");
 		
 		if(!EmailValidator.getInstance().isValid(user.getEmailAddress()))
 			errors.rejectValue("emailAddress", "Invalid.userForm.emailAddress");
-		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "telephoneNumber", "NotEmpty");
 	}
 
 }
