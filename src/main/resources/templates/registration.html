@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Registration</title>
+</head>
+<body>
+	<form action="/registration" method="POST">
+		<input type="hidden" th:name="${_csrf.parameterName}"
+			th:value="${_csrf.token}" />
+		<p>Choose Username:</p>
+		<p>
+			<input type="text" name="username" />
+		</p>
+		<p>Choose Password:</p>
+		<p>
+			<input type="password" name="password" />
+		</p>
+		<p>Confirm Password:</p>
+		<p>
+			<input type="password" name="passwordConfirm" />
+		</p>
+		<p>Enter your First Name:</p>
+		<p>
+			<input type="text" name="firstName" />
+		</p>
+		<p>Enter your Last Name:</p>
+		<p>
+			<input type="text" name="lastName" />
+		</p>
+		<p>Enter your Email Address:</p>
+		<p>
+			<input type="text" name="emailAddress" />
+		</p>
+		<p>Enter your Telephone Number:</p>
+		<p>
+			<input type="text" name="emailAddress" />
+		</p>
+		<p>
+			<button type="submit">Register</button>
+		</p>
+	</form>
+</body>
+</html>
