@@ -13,12 +13,12 @@ import com.rx.powerstore.repository.ProductRepository;
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Override
 	public Product findOne(Long id) {
 		return productRepository.findOne(id);
 	}
-	
+
 	@Override
 	public Product findByName(String name) {
 		return productRepository.findByName(name);
@@ -37,5 +37,10 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void save(Product product) {
 		productRepository.save(product);
+	}
+
+	@Override
+	public void delete(Product product) {
+		productRepository.delete(product);
 	}
 }

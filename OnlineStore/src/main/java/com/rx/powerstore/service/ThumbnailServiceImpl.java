@@ -15,7 +15,7 @@ public class ThumbnailServiceImpl implements ThumbnailService{
 	@Autowired
 	private ThumbnailRepository thumbnailRepository;
 	
-	static final String FILE_PATH = "C:/Users/Cristian/Pictures/OnlineStore_Images";
+	static final String FILE_PATH = "C:/Users/Cristian/Pictures/OnlineStore_Images/";
 	private File file;
 	
 	@Override
@@ -26,30 +26,43 @@ public class ThumbnailServiceImpl implements ThumbnailService{
 		return convFile;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.rx.powerstore.service.ThumbnailService#getNewThumbnail(org.springframework.web.multipart.MultipartFile)
+	 * Converts multipart files to files and returns a new Thumbnail with the converted file's path.
+	 */
 	@Override
-	public void copyToDisk(MultipartFile multipart) {
+	public Thumbnail getNewThumbnail(MultipartFile multipart) {
 		try {
 			file = multipartToFile(multipart);
 			file.createNewFile();
 			
 			Thumbnail thumbnail = new Thumbnail();
-			thumbnail.setFilePath(file.getAbsolutePath());
+			thumbnail.setFilePath(FILE_PATH + file.getName());
+			
+			return thumbnail;
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 	}
 	
 	@Override
-	public String getFilePath() {
-		return file.getAbsolutePath();
+	public Thumbnail findOne(Long id) {
+		return thumbnailRepository.findOne(id);
 	}
 	
 	@Override
 	public void save(Thumbnail thumbnail) {
 		thumbnailRepository.save(thumbnail);
+	}
+	
+	@Override
+	public void delete(Thumbnail thumbnail) {
+		thumbnailRepository.delete(thumbnail);
 	}
 }

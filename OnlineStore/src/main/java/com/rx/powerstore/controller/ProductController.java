@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.rx.powerstore.entity.Category;
 import com.rx.powerstore.entity.Product;
 import com.rx.powerstore.entity.Thumbnail;
 import com.rx.powerstore.service.CategoryService;
@@ -50,24 +49,26 @@ public class ProductController {
 
 	@PostMapping("/admin/add-product")
 	public String addProduct(@Valid @ModelAttribute("productForm") Product productForm, BindingResult bindingResult,
-			HttpServletRequest request, @RequestParam("thumbnailFile") MultipartFile thumbnailFile, Model model) {
+			HttpServletRequest request, @RequestParam("thumbnailFile") MultipartFile multipart, Model model) {
 		productValidator.validate(productForm, bindingResult);
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("categories", categoryService.findAll());
 			return "admin/add-product";
 		}
+		Thumbnail thumbnail = thumbnailService.getNewThumbnail(multipart);
 
-		thumbnailService.copyToDisk(thumbnailFile);
-		Thumbnail thumbnail = new Thumbnail();
-		thumbnail.setFilePath(thumbnailService.getFilePath());
+		if (thumbnail == null)
+			return "admin/add-product";
+
 		thumbnailService.save(thumbnail);
 		List<Thumbnail> thumbnails = new ArrayList<Thumbnail>();
 		thumbnails.add(thumbnail);
 		productForm.setThumbnails(thumbnails);
 		productForm.setCategory(categoryService.findOne(Integer.parseInt(request.getParameter("categoryId"))));
 		productService.save(productForm);
-		return "admin/view-products";
+
+		return "redirect:/admin/view-products";
 	}
 
 	@GetMapping("/admin/view-products")
@@ -76,9 +77,17 @@ public class ProductController {
 		return "admin/view-products";
 	}
 
+	@RequestMapping(value = "/admin/delete-product/id={id}", method = RequestMethod.GET)
+	public String deleteProduct(@PathVariable("id") long id, Model model) {
+		productService.delete(productService.findOne(id));
+		
+		return "redirect:/admin/view-products";
+	}
+
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
 	public String viewProduct(@PathVariable("id") long id, Model model) {
 		model.addAttribute("product", productService.findOne(id));
 		return "product";
 	}
+
 }

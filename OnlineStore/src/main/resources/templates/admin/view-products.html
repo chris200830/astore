@@ -5,37 +5,55 @@
 <meta charset="ISO-8859-1" />
 
 <title>Insert title here</title>
-<link href="../css/bootstrap.min.css" rel="stylesheet"/>	
-		<!--[if lte IE 6]>
-		<script src="js/html5shiv.min.js"></script>
-		<script src="js/respond.min.js"></script>
+<link href="../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
 	<![endif]-->
 </head>
 <body>
 	<h1 align="center">List of products</h1>
-	<div class="table-responsive">
-		<table class="table table-striped table-bordered text-left">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Price</th>
-					<th>Total Count</th>
-					<th>Details</th>
-					<th>Category</th>
+	<p align="right">
+		<a href="/admin/add-product" class="btn btn-info btn-lg"> <span
+			class="glyphicon glyphicon-plus"></span> Add Product
+		</a>
+	</p>
+	<div th:if="${!products.isEmpty()}">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered text-left">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Price</th>
+						<th>Total Count</th>
+						<th>Details</th>
+						<th>Category</th>
+						<th>Update</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tr th:each="product : ${products}">
+					<td th:text="${product.id}"></td>
+					<td th:text="${product.name}"></td>
+					<td th:text="${product.price} + ' RON'"></td>
+					<td th:text="${product.totalCount}"></td>
+					<td th:text="${product.details}"></td>
+					<td th:text="${product.category.name}"></td>
+					<td align="center"><a th:href="@{'/admin/update-product/id='+${product.id}}">
+							<span class="glyphicon glyphicon-pencil"></span>
+					</a></td>
+					<td align="center"><a th:href="@{'/admin/delete-product/id='+${product.id}}"><span
+							class="glyphicon glyphicon-trash"></span></a></td>
+
 				</tr>
-			</thead>
-			<tr th:each="product : ${products}">
-				<td th:text="${product.id}"></td>
-				<td th:text="${product.name}"></td>
-				<td th:text="${product.price} + ' RON'"></td>
-				<td th:text="${product.totalCount}"></td>
-				<td th:text="${product.details}"></td>
-				<td th:text="${product.category.name}"></td>
-			</tr>
-		</table>
+			</table>
+		</div>
 	</div>
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<div th:if="${products.isEmpty()}">
+		<h3 align="center">The list is empty!</h3>
+	</div>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

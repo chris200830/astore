@@ -11,7 +11,8 @@ import com.rx.powerstore.entity.Thumbnail;
 @Service
 public interface ThumbnailService {
 	public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException;
-	public void copyToDisk(MultipartFile multipart);
-	public String getFilePath();
+	public Thumbnail getNewThumbnail(MultipartFile multipart);
+	public Thumbnail findOne(Long id);
 	public void save(Thumbnail thumbnail);
+	public void delete(Thumbnail thumbnail);
 }

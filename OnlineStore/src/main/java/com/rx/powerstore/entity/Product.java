@@ -33,11 +33,13 @@ public class Product {
 	private Category category;
 
 	private int totalCount;
+	
+	private String manufacturer;
 
 	@Transient
 	private int count;
 
-	@OneToMany(targetEntity = Thumbnail.class)
+	@OneToMany(targetEntity = Thumbnail.class, orphanRemoval = true)
 	private List<Thumbnail> thumbnails;
 
 	public long getId() {
@@ -102,5 +104,13 @@ public class Product {
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
 	}
 }
