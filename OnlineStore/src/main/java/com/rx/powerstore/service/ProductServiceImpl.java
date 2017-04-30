@@ -43,4 +43,13 @@ public class ProductServiceImpl implements ProductService {
 	public void delete(Product product) {
 		productRepository.delete(product);
 	}
+	
+	@Override
+	public void update(Product product) {
+		findOne(product.getId()).setName(product.getName());
+		findOne(product.getId()).setDetails(product.getDetails());
+		findOne(product.getId()).setPrice(product.getPrice());
+		findOne(product.getId()).setTotalCount(product.getTotalCount());
+		findOne(product.getId()).setCategory(product.getCategory());
+	}
 }

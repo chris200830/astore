@@ -61,7 +61,6 @@ public class ProductController {
 		if (thumbnail == null)
 			return "admin/add-product";
 
-		thumbnailService.save(thumbnail);
 		List<Thumbnail> thumbnails = new ArrayList<Thumbnail>();
 		thumbnails.add(thumbnail);
 		productForm.setThumbnails(thumbnails);
@@ -80,7 +79,30 @@ public class ProductController {
 	@RequestMapping(value = "/admin/delete-product/id={id}", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable("id") long id, Model model) {
 		productService.delete(productService.findOne(id));
-		
+
+		return "redirect:/admin/view-products";
+	}
+
+	@GetMapping("/admin/update-product/id={id}")
+	public String updateProduct(@PathVariable("id") long id, Model model) {
+		model.addAttribute("categories", categoryService.findAll());
+		model.addAttribute("product", productService.findOne(id));
+		return "admin/add-product";
+	}
+
+	@PostMapping("/admin/update-product/id={id}")
+	public String updateProduct(@PathVariable("id") long id, @Valid @ModelAttribute("product") Product product,
+			BindingResult bindingResult, HttpServletRequest request,
+			@RequestParam("thumbnailFile") MultipartFile multipart) {
+
+		List<Thumbnail> thumbnails = new ArrayList<Thumbnail>();
+		Thumbnail thumbnail = thumbnailService.getNewThumbnail(multipart);
+		thumbnails.add(thumbnail);
+
+		product.setThumbnails(thumbnails);
+		product.setCategory(categoryService.findOne(Integer.parseInt(request.getParameter("categoryId"))));
+		productService.save(product);
+
 		return "redirect:/admin/view-products";
 	}
 

@@ -55,4 +55,10 @@ public class UserController {
 
 		return "login";
 	}
+	
+	@RequestMapping(value = "/admin/view-users", method = RequestMethod.GET)
+	public String viewUsers(Model model) {
+		model.addAttribute("users", userService.findAll());
+		return "admin/view-users";
+	}
 }
