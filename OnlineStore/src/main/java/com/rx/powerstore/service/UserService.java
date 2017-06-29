@@ -14,4 +14,8 @@ public interface UserService {
 	public User findByEmailAddress(String emailAddress);
 	
 	public void save(User user);
+
+	public User findOne(long id);
+
+	public void delete(User user);
 }

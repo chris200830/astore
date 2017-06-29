@@ -15,7 +15,7 @@ public class ThumbnailServiceImpl implements ThumbnailService{
 	@Autowired
 	private ThumbnailRepository thumbnailRepository;
 	
-	static final String FILE_PATH = "C:/Users/Cristian/Pictures/OnlineStore_Images/";
+	static final String FILE_PATH = "C:/Users/Cristian/Documents/RXPowerstore/trunk/OnlineStore/src/main/resources/static/css/images";
 	private File file;
 	
 	@Override
@@ -37,7 +37,7 @@ public class ThumbnailServiceImpl implements ThumbnailService{
 			file.createNewFile();
 			
 			Thumbnail thumbnail = new Thumbnail();
-			thumbnail.setFilePath(FILE_PATH + file.getName());
+			thumbnail.setFilePath("/static/css/images/" + file.getName());
 			
 			return thumbnail;
 		} catch (IllegalStateException e) {

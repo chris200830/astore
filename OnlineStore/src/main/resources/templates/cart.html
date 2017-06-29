@@ -37,30 +37,28 @@
 	
 					<!-- Container -->
 					<div id="container">
-								<h1 th:text="${product.name} + ' by ' + ${product.manufacturer}"
-					align="left"></h1>
+								<h1
+					align="left">Item List</h1>
 					
 					<div class="container">
-					<div class="image">
-							    		<img th:src="${product.thumbnailPath}" alt="" />
-							    	
-					</div>
+					<table>
+					<thead>
+					<tr>
+					<th>Name</th>
+					<th>Count</th>
+					<th align="center">Price</th>
+					</tr>
+					</thead>
+					<tr th:each="item : ${items}">
+					<td th:text="${item.product.name}"></td>
+					<td th:text="${item.count}" align="center"></td>
+					<td th:with="result=${item.count * item.product.price}" th:text="${result}"></td>
+					</tr>
 					
-						<form th:action="@{/add-to-cart(id=${product.id})}" method="post">	
-						<input type="hidden" th:name="${_csrf.parameterName}"
-				th:value="${_csrf.token}" />					
-						<h3 th:text="'Price: ' + ${product.price} + ' USD'"></h3>
-						<div class="form-group">
-						<select name="count">
-						<option th:each="c : ${count}" th:value="${c}"
-					th:text="${c}">asd</option>
-						</select>
-						</div>
-						
-						<p>
-						<button type="submit" class="btn" value="Submit Button">Add to Basket</button>
-						</p>
-						</form>
+					</table>
+			
+					<a href="/subscriber/delivery-address" class="btn btn-info" >Place Order</a>
+	
 					</div>
 					<!-- Brands -->
 				<div th:include="fragments/brands :: brands"></div>

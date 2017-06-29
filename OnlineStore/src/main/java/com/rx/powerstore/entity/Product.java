@@ -10,11 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
+@NamedQueries({@NamedQuery(name="Product.findByCategoryName", query = "select p from Product p, Category c where p.category.id = c.id and c.name=(?1)"),
+@NamedQuery(name="Product.findByCategoryNameOrderByPriceAsc", query = "select p from Product p, Category c where p.category.id = c.id and c.name=(?1) order by p.price asc"),
+@NamedQuery(name="Product.findByCategoryNameAndManufacturer", query = "select p from Product p, Category c where p.category.id = c.id and c.name=(?1) and p.manufacturer=(?2)")})
+
 @Table(name = "product")
 public class Product {
 	@Id
@@ -36,9 +41,10 @@ public class Product {
 	private int totalCount;
 	
 	private String manufacturer;
-
-	@Transient
-	private int count;
+	
+	private String sizeList;
+	
+	private String thumbnailPath;
 
 	@OneToMany(targetEntity = Thumbnail.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Thumbnail> thumbnails;
@@ -83,14 +89,6 @@ public class Product {
 		this.category = category;
 	}
 
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
 	public List<Thumbnail> getThumbnails() {
 		return thumbnails;
 	}
@@ -113,5 +111,21 @@ public class Product {
 
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
+	}
+
+	public String getSizeList() {
+		return sizeList;
+	}
+
+	public void setSizeList(String sizeList) {
+		this.sizeList = sizeList;
+	}
+
+	public String getThumbnailPath() {
+		return thumbnailPath;
+	}
+
+	public void setThumbnailPath(String thumbnailPath) {
+		this.thumbnailPath = thumbnailPath;
 	}
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.rx.powerstore.basket.Basket;
 import com.rx.powerstore.entity.Product;
 import com.rx.powerstore.entity.Thumbnail;
 import com.rx.powerstore.service.CategoryService;
@@ -65,6 +66,7 @@ public class ProductController {
 		thumbnails.add(thumbnail);
 		productForm.setThumbnails(thumbnails);
 		productForm.setCategory(categoryService.findOne(Integer.parseInt(request.getParameter("categoryId"))));
+		productForm.setThumbnailPath(thumbnail.getFilePath());
 		productService.save(productForm);
 
 		return "redirect:/admin/view-products";
@@ -101,6 +103,7 @@ public class ProductController {
 
 		product.setThumbnails(thumbnails);
 		product.setCategory(categoryService.findOne(Integer.parseInt(request.getParameter("categoryId"))));
+		product.setThumbnailPath(thumbnail.getFilePath());
 		productService.save(product);
 
 		return "redirect:/admin/view-products";
@@ -109,7 +112,13 @@ public class ProductController {
 	@RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
 	public String viewProduct(@PathVariable("id") long id, Model model) {
 		model.addAttribute("product", productService.findOne(id));
+		List<Integer> count = new ArrayList<Integer>();
+		
+		for(int i = 1; i <= productService.findOne(id).getTotalCount(); i++) 
+			count.add(i);
+		
+		model.addAttribute("count", count);
+		model.addAttribute("totalPrice", Basket.getInstance().calculateTotalPrice());
 		return "product";
 	}
-
 }

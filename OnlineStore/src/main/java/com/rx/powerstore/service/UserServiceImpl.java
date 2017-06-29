@@ -37,18 +37,26 @@ public class UserServiceImpl implements UserService {
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
-	
+
 	@Override
 	public User findByEmailAddress(String emailAddress) {
 		return userRepository.findByEmailAddress(emailAddress);
 	}
-	
+
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		Set<Role> roles = new HashSet<>();
-		roles.add(roleRepository.findOne((long)5));
+		roles.add(roleRepository.findOne((long) 5));
 		user.setRoles(roles);
-		
+
 		userRepository.save(user);
+	}
+
+	public User findOne(long id) {
+		return userRepository.findOne(id);
+	}
+
+	public void delete(User user) {
+		userRepository.delete(user);
 	}
 }

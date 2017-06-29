@@ -33,14 +33,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 	.antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                     .antMatchers("/resources/**", "/").permitAll()
                     .antMatchers("/resources/**", "/registration").permitAll()
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
-                    .anyRequest().authenticated()
+                    .antMatchers("/admin/**").hasAuthority("ADMIN")       
+                    .antMatchers("/subscriber/**").hasAuthority("SUBSCRIBER")
+                    .anyRequest().permitAll()
                     .and()
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
                     .and()
                 .logout()
+        //        .logoutUrl("/perform_logout")
+                .logoutSuccessUrl("/")
                     .permitAll();
     }
     

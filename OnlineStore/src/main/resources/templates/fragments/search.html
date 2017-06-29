@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Search Bar</title>
+</head>
+<body>
+<div th:fragment="search-bar">
+		<div class="options">
+			<div class="search">
+				<form action="" method="post">
+					<span class="field"><input type="text" class="blink" value="SEARCH" title="SEARCH" /></span>
+					<input type="text" class="search-submit" value="GO" />
+				</form>
+			</div>
+			<span class="left"><a href="#">Advanced Search</a></span>
+			
+			<div class="right">
+				<span class="cart">
+					<a href="/cart-items" class="cart-ico">&nbsp;</a>
+					<strong th:text="'&#36;' + ${totalPrice}">$0.00</strong>
+				</span>
+				<span class="left more-links">
+					<a href="#">Checkout</a>
+					<a href="#">Details</a>
+				</span>
+			</div>
+		</div>
+</div>
+</body>
+</html>

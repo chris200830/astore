@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Header</title>
+</head>
+<body>
+<div th:fragment="head">
+<div id="top">
+	
+	<div class="shell">
+<div id="header">
+			<h1 id="logo"><a href="/">Urban Gear</a></h1>
+			<div id="navigation">
+				<ul>
+				    <li><a href="/">Home</a></li>
+					<li><a href="#">Support</a></li>
+					<li><a href="#">Contact</a></li>
+					<li><a href="#">The Store</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/view-products">Products</a></li>
+					<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/view-users">Users</a></li>
+					<li sec:authorize="isAnonymous()"><a href="/login">Log In</a></li>
+					<li sec:authorize="isAnonymous()" class="last"><a href="/registration">Register</a></li>
+					<li sec:authorize="isAuthenticated()" class="last">				<form action="/logout" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+				th:value="${_csrf.token}" />
+				<input type="submit" value="Logout"/>
+				</form></li>
+				</ul>
+			</div>
+		</div>
+		<!-- Slider -->
+				<div id="slider" >
+			<div id="slider-holder" >
+				<ul>
+				    <li><a href="#"><img src="/static/css/images/slide1.jpg" width="1000" height="388" alt="" /></a></li>
+				    <li><a href="#"><img src="/static/css/images/slide2.jpg" width="1000" height="388" alt="" /></a></li>
+				    <li><a href="#"><img src="/static/css/images/slide1.jpg" width="1000" height="388" alt="" /></a></li>
+				    <li><a href="#"><img src="/static/css/images/slide2.jpg" width="1000" height="388" alt="" /></a></li>
+				    <li><a href="#"><img src="/static/css/images/slide1.jpg" width="1000" height="388" alt="" /></a></li>
+				    <li><a href="#"><img src="/static/css/images/slide2.jpg" width="1000" height="388" alt="" /></a></li>
+				</ul>
+			</div>
+			<div id="slider-nav">
+				<a href="#" class="prev">Previous</a>
+				<a href="#" class="next">Next</a>
+			</div>
+		</div>
+		<!-- End Slider -->
+		
+	</div>
+</div>
+</div>
+</body>
+</html>

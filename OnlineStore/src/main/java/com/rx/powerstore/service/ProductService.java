@@ -13,7 +13,15 @@ public interface ProductService {
 	public Product findByName(String name);
 
 	public List<Product> findAll();
+	
+	public List<Product>findByCategoryName(String categoryName);
+	
+	public List<Product>findByCategoryNameOrderByPriceAsc(String categoryName);
+	
+	public List<Product>findByCategoryNameOrderByPriceDesc(String categoryName);
 
+	public List<Product>findByCategoryNameAndManufacturer(String categoryName, String manufacturer);
+	
 	public void save(Product product);
 
 	public void delete(Product product);

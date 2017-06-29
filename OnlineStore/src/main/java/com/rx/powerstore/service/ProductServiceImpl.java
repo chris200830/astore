@@ -33,7 +33,27 @@ public class ProductServiceImpl implements ProductService {
 
 		return products;
 	}
-
+	
+	@Override
+	public List<Product>findByCategoryName(String categoryName) {
+		return productRepository.findByCategoryName(categoryName);
+	}
+	
+	@Override
+	public List<Product>findByCategoryNameOrderByPriceAsc(String categoryName) {
+		return productRepository.findByCategoryNameOrderByPriceAsc(categoryName);
+	}
+	
+	@Override
+	public List<Product>findByCategoryNameOrderByPriceDesc(String categoryName) {
+		return productRepository.findByCategoryNameOrderByPriceDesc(categoryName);
+	}
+	
+	@Override
+	public List<Product>findByCategoryNameAndManufacturer(String categoryName, String manufacturer) {
+		return productRepository.findByCategoryNameAndManufacturer(categoryName, manufacturer);
+	}
+	
 	@Override
 	public void save(Product product) {
 		productRepository.save(product);

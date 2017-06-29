@@ -37,31 +37,8 @@
 	
 					<!-- Container -->
 					<div id="container">
-								<h1 th:text="${product.name} + ' by ' + ${product.manufacturer}"
-					align="left"></h1>
-					
-					<div class="container">
-					<div class="image">
-							    		<img th:src="${product.thumbnailPath}" alt="" />
-							    	
-					</div>
-					
-						<form th:action="@{/add-to-cart(id=${product.id})}" method="post">	
-						<input type="hidden" th:name="${_csrf.parameterName}"
-				th:value="${_csrf.token}" />					
-						<h3 th:text="'Price: ' + ${product.price} + ' USD'"></h3>
-						<div class="form-group">
-						<select name="count">
-						<option th:each="c : ${count}" th:value="${c}"
-					th:text="${c}">asd</option>
-						</select>
-						</div>
-						
-						<p>
-						<button type="submit" class="btn" value="Submit Button">Add to Basket</button>
-						</p>
-						</form>
-					</div>
+								
+	
 					<!-- Brands -->
 				<div th:include="fragments/brands :: brands"></div>
 				<!-- End Brands -->

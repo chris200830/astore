@@ -1,5 +1,6 @@
 package com.rx.powerstore.entity;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class Address {
 	private int postalCode;
 	
 	private String streetAndBuilding;
-
+	
 	public int getId() {
 		return id;
 	}
